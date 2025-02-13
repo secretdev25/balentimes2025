@@ -35,9 +35,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // 🎮 Start game with music
     function startGame() {
-        gameMusic.play();
+        gameMusic.play().catch(() => {
+            console.log("⚠️ Autoplay blocked! Waiting for user interaction...");
+            document.addEventListener("click", () => gameMusic.play(), { once: true });
+        });
         gameLoop();
     }
+    
+    // 📱 Touch Controls for Mobile
+document.addEventListener("touchstart", (e) => {
+    if (e.touches[0].clientX < canvas.width / 2) {
+        player.x -= 20; // Move left
+    } else {
+        player.x += 20; // Move right
+    }
+});
 
     // 🎵 Stop game music and play end music
     function playEndMusic() {
