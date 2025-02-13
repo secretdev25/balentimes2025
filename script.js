@@ -7,9 +7,13 @@ const endMusic = new Audio("gameover.mp3");   // End music
 
 gameMusic.loop = true;
 endMusic.loop = false;
-
 gameMusic.volume = 0.5;
 endMusic.volume = 0.7;
+
+// ✅ Fix: Enable music on first tap (Autoplay Fix)
+document.addEventListener("click", () => {
+    gameMusic.play().catch(error => console.log("Autoplay blocked:", error));
+}, { once: true }); // Runs only once
 
 // 🎮 Setup Canvas
 const canvas = document.createElement("canvas");
